@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="SystemDump" targetNamespace="http://tempuri.org/SystemDump.xsd" elementFormDefault="qualified" xmlns="http://tempuri.org/SystemDump.xsd" xmlns:mstns="http://tempuri.org/SystemDump.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="SystemState">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ComputerName" type="xs:string" />
+				<xs:element name="OperatingSystemName" type="xs:string" />
+				<xs:element name="OperatingSystemPlatform" type="xs:string" />
+				<xs:element name="OperatingSystemVersion" type="xs:string" />
+				<xs:element name="CpuSpeedMhz" type="xs:long" />
+				<xs:element name="TotalBytesPhysicalMemory" type="xs:long" />
+				<xs:element name="AvailableBytesPhysicalMemory" type="xs:long" />
+				<xs:element name="TotalBytesVirtualMemory" type="xs:long" />
+				<xs:element name="AvailableBytesVirtualMemory" type="xs:long" />
+				<xs:element ref="Disk" maxOccurs="unbounded" />
+				<xs:element ref="Process" maxOccurs="unbounded" />
+				<xs:element ref="OtherProcesses" maxOccurs="1" />
+			</xs:sequence>
+			<xs:attribute name="TimeStamp" type="xs:dateTime" />
+			<xs:attribute name="Version" type="xs:string" />
+			<xs:attribute name="Note" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Disk">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AvailableFreeBytes" type="xs:long" />
+				<xs:element name="TotalFreeBytes" type="xs:long" />
+				<xs:element name="TotalBytes" type="xs:long" />
+			</xs:sequence>
+			<xs:attribute name="DriveLetter" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ProcessMemory">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AllocatedPhysicalBytes" type="xs:long" />
+				<xs:element name="VirtualMemoryBytes" type="xs:long" />
+				<xs:element name="PagedMemoryBytes" type="xs:long" />
+				<xs:element name="PagedSystemMemoryBytes" type="xs:long" />
+				<xs:element name="NonpagedSystemMemoryBytes" type="xs:long" />
+				<xs:element name="PrivateMemoryBytes" type="xs:long" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Process">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ProcessMemory" maxOccurs="1" />
+				<xs:element ref="ProcessValue" maxOccurs="1" />
+			</xs:sequence>
+			<xs:attribute name="ProcessName" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ProcessValue">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PeakAllocatedPhysicalMemoryBytes" type="xs:long" />
+				<xs:element name="PeakVirtualMemoryBytes" type="xs:long" />
+				<xs:element name="PeakPagedMemoryBytes" type="xs:long" />
+				<xs:element name="PrivilegedProcessorTicks" type="xs:long" />
+				<xs:element name="UserProcessorTicks" type="xs:long" />
+				<xs:element name="PriorityBoostEnabled" type="xs:boolean" />
+				<xs:element name="PriorityClass" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OtherProcesses">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProcessCount" type="xs:int" />
+				<xs:element ref="ProcessMemory" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SystemStates">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SystemState" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
